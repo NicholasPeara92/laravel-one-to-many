@@ -100,10 +100,10 @@ class ProjectController extends Controller
             $data['cover_image'] = Storage::disk('public')->put('uploads', $data['cover_image']);
         }
         
-        if( isset($data['no_image']) && $project->cover_image  ) {
-            Storage::disk('public')->delete($project->cover_image);
-            $project->cover_image = null;
-        }
+        // if( isset($data['no_image']) && $project->cover_image  ) {
+        //     Storage::disk('public')->delete($project->cover_image);
+        //     $project->cover_image = null;
+        // }
         $project->update($data);
 
         return redirect()->route('admin.projects.index')->with('message', "Il progetto $old_title è stato aggiornato");
