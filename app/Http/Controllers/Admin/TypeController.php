@@ -6,6 +6,7 @@ use App\Models\Type;
 use App\Http\Requests\StoreTypeRequest;
 use App\Http\Requests\UpdateTypeRequest;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Str;
 
 class TypeController extends Controller
 {
@@ -28,7 +29,7 @@ class TypeController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.types.create');
     }
 
     /**
@@ -39,7 +40,14 @@ class TypeController extends Controller
      */
     public function store(StoreTypeRequest $request)
     {
-        //
+        $data = $request->validated();
+
+        $new_type =new Type();
+        $new_type->fill($data);
+        $new_type->slug = Str::slug($new_type->name);
+        $new_type->save();
+
+        return redirect()->route('admin.types.index')->with('message', "La tipologia $new_type->name è stata creata con successo!");
     }
 
     /**
@@ -61,7 +69,7 @@ class TypeController extends Controller
      */
     public function edit(Type $type)
     {
-        //
+      return view('admin.types.edit', compact('type'));
     }
 
     /**
@@ -73,7 +81,17 @@ class TypeController extends Controller
      */
     public function update(UpdateTypeRequest $request, Type $type)
     {
-        //
+      $old_name = $type->name;
+
+      $data = $request->validated();
+
+      $type->slug = Str::slug($data['name']);
+
+      $type->update($data);
+
+      return redirect()->route('admin.types.index')->with('message', "La tipologia $old_name è stata aggiornata!");
+    
+
     }
 
     /**
@@ -84,6 +102,10 @@ class TypeController extends Controller
      */
     public function destroy(Type $type)
     {
-        //
+      $old_name = $type->name;
+
+      $type->delete();
+
+      return redirect()->route('admin.types.index')->with('message', "La tipologia $old_name è stata cancellata!");
     }
 }

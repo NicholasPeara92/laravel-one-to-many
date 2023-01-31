@@ -44,7 +44,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                   </div>
                   <div class="modal-body">
-                    Sei sicuro di eliminare il progetto "{{ $type->name }}"?
+                    Sei sicuro di eliminare la tipologia "{{ $type->name }}"?
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
